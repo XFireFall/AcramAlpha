@@ -1,0 +1,106 @@
+/* name, C++ name, priority, diff, tex */
+
+#ifndef FUNC1
+#define FUNC1(...)
+#endif
+
+#ifndef FUNC2
+#define FUNC2(...)
+#endif
+
+#define D( v ) ((v).diff())		// Diff
+#define T( v ) ((v).tex(p##v))	// Tex
+#define Z( v ) ((v).tex(100))	// tex with Zero priority 
+#define S( v ) ((v).tex(prio))	// tex with Shifting downwards (for brackets mostly)
+
+
+FUNC2(+, operator+, 7,
+	  ({ D(x)  +  D(y); }),
+	  ({ T(x)+"+"+T(y); })
+)
+FUNC2(-, operator-, 7,
+	  ({ D(x)  -  D(y); }),
+	  ({ T(x)+"-"+T(y); })
+)
+FUNC1(-, operator-, 6,
+	  ({  -  D(x); }),
+	  ({ "-"+T(x); })
+)
+
+FUNC2(*, operator*, 4,
+	  ({ D(x) * y + x * D(y); }),
+	  ({ T(x) + "\\cdot{" + T(y) + "}"; })
+)
+FUNC2(/, operator/, 4,
+	  ({ D(x)/y - x*D(y)/(y^2); }),
+	  ({ "\\frac{" + Z(x) + "}{" + Z(y) + "}"; })
+)
+
+FUNC1(exp, exp, 3,
+	  ({ x.exp() * D(x); }),
+	  ({ "e^{" + Z(x) + "}"; })
+)
+FUNC1(ln, ln, 3,
+	  ({ D(x) / x; }),
+	  ({ "\\ln{" + T(x) + "}"; })
+)
+FUNC2(^, operator^, 2,
+	  ({ (x^y)*x.ln()*D(y) + (x^(y-1))*y*D(x); }),
+	  ({ "{" + T(x) + "}^{" + Z(y) + "}"; })
+)
+
+FUNC1(sqrt, sqrt, 3,
+	  ({ D(x)/ (x.sqrt()*2); }),
+	  ({ "\\sqrt{" + Z(x) + "}"; })
+)
+
+FUNC1(sin, sin, 3,
+	  ({ x.cos()*D(x); }),
+	  ({ "\\sin{" + T(x) + "}"; })
+)
+FUNC1(arcsin, arcsin, 3,
+	  ({ D(x)/(-(x^2)+1).sqrt(); }),
+	  ({ "\\arcsin{" + T(x) + "}"; })
+)
+
+FUNC1(cos, cos, 3,
+	  ({ -x.sin()*D(x); }),
+	  ({ "\\cos{" + T(x) + "}"; })
+)
+FUNC1(arccos, arccos, 3,
+	  ({ -D(x)/(-(x^2)+1).sqrt(); }),
+	  ({ "\\arccos{" + T(x) + "}"; })
+)
+
+FUNC1(tg, tg, 3,
+	  ({ D(x)*((x.tg()^2) + 1); }),
+	  ({ "\\tg{" + T(x) + "}"; })
+)
+FUNC1(arctg, arctan, 3,
+	  ({ D(x)/((x^2)+1); }),
+	  ({ "\\arctg{" + T(x) + "}"; })
+)
+
+
+FUNC1(ctg, ctg, 3,
+	  ({ -D(x)*(x.ctg()^2 + 1); }),
+	  ({ "\\cos{" + T(x) + "}"; })
+)
+FUNC1(arcctg, arcctg, 3,
+	  ({ -D(x)/((x^2)+1); }),
+	  ({ "\\arcctg{" + T(x) + "}"; })
+)
+
+
+FUNC1(br, br, 1,
+	  ({ D(x).br(); }),
+	  ({ S(x); })
+)
+
+#undef D
+#undef T
+#undef Z
+#undef S
+
+#undef FUNC1
+#undef FUNC2

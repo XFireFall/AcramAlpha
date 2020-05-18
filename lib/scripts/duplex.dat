@@ -1,0 +1,17 @@
+/* name, result of name(x, x) */
+
+#ifndef FUNC2
+#define FUNC2(...)
+#endif
+
+
+FUNC2(+, ({ x*2 }))
+
+FUNC2(-, ({  0  }))
+
+FUNC2(*, ({ x^2 }))
+
+FUNC2(/, ({  1  }))
+
+
+#undef FUNC2

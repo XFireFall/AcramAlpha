@@ -1,0 +1,89 @@
+/* FUNC2: name, cases as {x, y, name(x,y)} */
+/* FUNC1: name, inverse function so name(inv(x))=x, cases as {x, name(x) */
+
+#ifndef FUNC1
+#define FUNC1(...)
+#endif
+
+#ifndef FUNC2
+#define FUNC2(...)
+#endif
+
+
+FUNC2(+,
+	{O, y, y},
+	{x, O, x}
+)
+
+FUNC2(-,
+	{x, O,  x}
+)
+
+FUNC1(-, -,
+	{O, O}
+)
+
+FUNC2(*,
+	{O, y, O},
+	{I, y, y},
+	{x, O, O},
+	{x, I, x}
+)
+
+FUNC2(/,
+	{O, y, O},
+	{x, I, x}
+)
+
+FUNC1(exp, ln,
+	{O, I}
+)
+
+FUNC1(ln, exp,
+	{I, O}
+)
+
+FUNC2(^,
+	{O, y, O},
+	{I, y, I},
+	{x, O, I},
+	{x, I, x}
+)
+
+FUNC1(sqrt, nil,
+	{O, O},
+	{I, I}
+)
+
+FUNC1(sin, arcsin,
+	{O, O}
+)
+FUNC1(arcsin, sin,
+	{O, O}
+)
+
+FUNC1(cos, arccos,
+	{O, I}
+)
+FUNC1(arccos, cos,
+	{I, O}
+)
+
+
+FUNC1(tg, arctg,
+	{O, O}
+)
+FUNC1(arctg, tg,
+	{O, O}
+)
+
+FUNC1(ctg, arcctg,
+	{O, O}
+)
+FUNC1(arcctg, ctg,
+	{O, O}
+)
+
+
+#undef FUNC1
+#undef FUNC2

@@ -1,0 +1,40 @@
+/* Self  ASSociativity (+):  (a+b)+c=a+(b+c) */
+
+/* Left  CONvolution (-, +): a-(b-c)=(a-b)+c */
+/* Right CONvolution (/, *): (a/b)/c=a/(b*c) */
+
+#ifndef COMM
+#define COMM(...)
+#endif
+
+#ifndef SASS
+#define SASS(...)
+#endif
+
+#ifndef LCONV
+#define LCONV(...)
+#endif
+
+#ifndef RCONV
+#define RCONV(...)
+#endif
+
+
+COMM(+)     /*     a+b = b+a     */
+SASS(+)     /* (a+b)+c = a+(b+c) */
+
+LCONV(-, +) /* a-(b-c) = (a-b)+c */
+RCONV(-, +) /* (a-b)-c = a-(b+c) */
+
+COMM(*)     /*     a*b = b*a     */
+SASS(*)     /* (a*b)*c = a*(b*c) */
+
+RCONV(/, *) /* (a/b)/c = a/(b*c) */
+
+RCONV(^, *) /* (a^b)^c = a^(b*c) */
+
+
+#undef COMM
+#undef SASS
+#undef LCONV
+#undef RCONV
